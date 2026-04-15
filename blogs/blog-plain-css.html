@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why I switched back to plain CSS — snhk</title>
+  <meta name="description" content="After years of utility-first frameworks, I returned to vanilla CSS. Here's why." />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+
+<body>
+
+  <a href="#blog-content" class="skip-link">Skip to content</a>
+
+  <header class="page-header" role="banner">
+    <a href="../writing.html" class="back-link" aria-label="Back to writing">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true">
+        <path d="M11 7H3M3 7L6.5 3.5M3 7L6.5 10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      Writing
+    </a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Switch to light mode" title="Toggle theme (T)">
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </svg>
+    </button>
+  </header>
+
+  <main class="blog-content" id="blog-content" tabindex="-1" aria-label="Blog post">
+
+    <article class="blog-post">
+      <h1 class="blog-title">Why I switched back to plain CSS</h1>
+      <time class="blog-date" datetime="2026-01-18">January 18, 2026</time>
+
+      <div class="blog-body">
+        <p>
+          I spent two years writing utility-first CSS. Tailwind, specifically. And for a while, it was great. Fast
+          to prototype, easy to reason about, zero naming decisions. But somewhere along the way, I started missing
+          something I couldn't quite name.
+        </p>
+
+        <p>
+          It took me a while to figure out what it was: <em>authorship</em>. When every element is a string of
+          <code>px-4 py-2 bg-gray-900 text-sm</code>, the stylesheet stops being a design artifact and becomes a
+          configuration file. I wanted to <em>write</em> CSS again, not configure it.
+        </p>
+
+        <h2 class="blog-heading">What I missed</h2>
+
+        <ul>
+          <li>Custom properties that tell a story — <code>--bg</code>, <code>--text-muted</code>, <code>--border</code></li>
+          <li>Selectors that describe relationships, not just elements</li>
+          <li>
+            Media queries that feel considered, not bolted on
+            <ul>
+              <li>Tailwind's <code>sm:</code> / <code>md:</code> breakpoints felt arbitrary for my designs</li>
+              <li>I wanted breakpoints based on content, not device categories</li>
+            </ul>
+          </li>
+          <li>A single file I could read top-to-bottom and understand the entire design system</li>
+        </ul>
+
+        <h2 class="blog-heading">What I don't miss</h2>
+
+        <p>
+          I'm not going to pretend everything about vanilla CSS is better. There are genuine trade-offs:
+        </p>
+
+        <ul>
+          <li>Naming things is hard. You spend time thinking about <code>.card-header</code> vs <code>.card-top</code></li>
+          <li>The cascade can bite you if you're not careful with specificity</li>
+          <li>Prototyping is slower — you have to write actual rules, not just add classes</li>
+        </ul>
+
+        <h2 class="blog-heading">My current setup</h2>
+
+        <p>
+          Here's what I use now for every project:
+        </p>
+
+        <ul>
+          <li>One <code>style.css</code> file with CSS custom properties for theming</li>
+          <li>Minimal reset (box-sizing, margin, padding)</li>
+          <li>Semantic class names that describe purpose, not appearance</li>
+          <li>No build step. No PostCSS. No purging. Just CSS</li>
+        </ul>
+
+        <p>
+          The result is a stylesheet I can read like a document. Every section maps to a part of the page.
+          Every variable name tells me what it controls. It's not the fastest way to work, but it's the most
+          <em>intentional</em> way to work. And for my projects, that matters more.
+        </p>
+
+        <h2 class="blog-heading">Related</h2>
+
+        <ul>
+          <li><a href="#" class="underline-link">Andy Bell — Every Layout</a></li>
+          <li><a href="#" class="underline-link">Heydon Pickering — Inclusive Components</a></li>
+          <li><a href="#" class="underline-link">Josh Comeau — CSS for JavaScript Developers</a></li>
+        </ul>
+
+        <p>
+          Plain CSS isn't trendy. It's not going to get you likes on Twitter. But it works, it lasts, and it forces
+          you to understand what you're building. That's enough for me.
+        </p>
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer page-footer" role="contentinfo">
+    <span class="footer-quote">Simplicity is the ultimate sophistication.</span>
+    <span class="footer-year">2026 <span class="footer-dot" aria-hidden="true">⊙</span></span>
+  </footer>
+
+  <div class="kbd-hint" id="kbdHint" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="../script.js"></script>
+</body>
+
+</html>

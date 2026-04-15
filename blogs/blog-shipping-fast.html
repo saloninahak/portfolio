@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>On shipping fast and staying sane — snhk</title>
+  <meta name="description" content="Thoughts on sustainable velocity, burnout, and why shipping fast doesn't mean shipping careless." />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+
+<body>
+
+  <a href="#blog-content" class="skip-link">Skip to content</a>
+
+  <header class="page-header" role="banner">
+    <a href="../writing.html" class="back-link" aria-label="Back to writing">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true">
+        <path d="M11 7H3M3 7L6.5 3.5M3 7L6.5 10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      Writing
+    </a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Switch to light mode" title="Toggle theme (T)">
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </svg>
+    </button>
+  </header>
+
+  <main class="blog-content" id="blog-content" tabindex="-1" aria-label="Blog post">
+
+    <article class="blog-post">
+      <h1 class="blog-title">On shipping fast and staying sane</h1>
+      <time class="blog-date" datetime="2026-02-04">February 04, 2026</time>
+
+      <div class="blog-body">
+        <p>
+          There's a cult of speed in tech. Ship fast. Move fast and break things. Iterate. Deploy. The language is
+          all velocity, all urgency. And honestly? I've been seduced by it too. There's a real high in shipping
+          something before anyone expects it.
+        </p>
+
+        <p>
+          But I've also been burned by it. Shipping fast without thinking is just <em>rushing</em>. And rushing
+          produces bugs, tech debt, and — worst of all — designs that don't respect the user. So I've been trying
+          to find a middle path.
+        </p>
+
+        <h2 class="blog-heading">Speed vs. velocity</h2>
+
+        <p>
+          Speed is how fast you move. Velocity is how fast you move <em>in the right direction</em>. You can ship
+          ten features in a week and still be going backwards if none of them solve the actual problem. I'd rather
+          ship one thing that matters than ten things that don't.
+        </p>
+
+        <p>
+          The trick is knowing which corners to cut and which corners are load-bearing. You can skip the perfect
+          animation. You can't skip the error state. You can launch with one color theme. You can't launch without
+          accessibility.
+        </p>
+
+        <h2 class="blog-heading">My shipping checklist</h2>
+
+        <ul>
+          <li>Does it solve the core problem? Ship it</li>
+          <li>Is the happy path smooth? Ship it</li>
+          <li>Are the error states handled? Ship it</li>
+          <li>
+            Is the code I'd want to maintain in six months?
+            <ul>
+              <li>If yes — ship it</li>
+              <li>If no — take thirty more minutes, then ship it</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h2 class="blog-heading">Staying sane</h2>
+
+        <p>
+          The sanity part is harder. I've learned a few things the hard way:
+        </p>
+
+        <ul>
+          <li>Sleep is not optional. Code written at 2am costs you three hours of debugging the next day</li>
+          <li>Taking a walk solves more bugs than <code>console.log</code></li>
+          <li>The deadline is almost never as hard as you think. Ask for an extra day. You'll be surprised</li>
+          <li>Celebrate shipping. Even the small things. <em>Especially</em> the small things</li>
+        </ul>
+
+        <h2 class="blog-heading">Related</h2>
+
+        <ul>
+          <li><a href="#" class="underline-link">Kent Beck — Test-Driven Development</a></li>
+          <li><a href="#" class="underline-link">Basecamp — Shape Up</a></li>
+        </ul>
+
+        <p>
+          Ship fast, but ship with intention. The best code is the code you don't have to fix tomorrow.
+        </p>
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer page-footer" role="contentinfo">
+    <span class="footer-quote">Done is better than perfect.</span>
+    <span class="footer-year">2026 <span class="footer-dot" aria-hidden="true">⊙</span></span>
+  </footer>
+
+  <div class="kbd-hint" id="kbdHint" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="../script.js"></script>
+</body>
+
+</html>
