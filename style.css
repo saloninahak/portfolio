@@ -1,0 +1,989 @@
+/* =========================================================
+   SALONI PORTFOLIO — style.css
+   Single stylesheet for all pages: index, writing, craft, blog.
+
+   Design system inspired by paco.me:
+   – Precise spacing tokens
+   – Smooth page-enter animations
+   – Consistent layout proportions
+   – Intentional whitespace
+   ========================================================= */
+
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist+Mono:wght@400&display=swap');
+
+/* =========================================================
+   CSS VARIABLES
+   ========================================================= */
+:root {
+  /* Spacing scale (8px base) */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-7: 28px;
+  --s-8: 32px;
+  --s-9: 36px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-14: 56px;
+  --s-16: 64px;
+  --s-20: 80px;
+
+  /* Layout */
+  --content-width: 680px;
+  --sidebar-width: 220px;
+  --gutter: 52px;
+  --page-pad: 28px;
+
+  /* Dark theme (default) */
+  --bg: #111110;
+  --bg-header: #111110;
+  --text: #d4d0c8;
+  --text-muted: #6f6d66;
+  --text-heading: #6f6d66;
+  --link: #d4d0c8;
+  --link-underline: #6f6d66;
+  --link-hover: #ffffff;
+  --border: #252422;
+  --pfp-bg: #252422;
+  --pfp-text: #6f6d66;
+  --toggle-bg: transparent;
+  --toggle-color: #6f6d66;
+  --toggle-hover: #d4d0c8;
+  --footer-text: #6f6d66;
+  --hint-bg: #1e1e1c;
+  --hint-text: #6f6d66;
+  --hint-border: #2a2a28;
+  --skip-bg: #252422;
+  --skip-text: #d4d0c8;
+  --code-bg: #1c1c1a;
+
+  --transition: 0.2s ease;
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="light"] {
+  --bg: #f5f4ef;
+  --bg-header: #f5f4ef;
+  --text: #1a1916;
+  --text-muted: #8f8d84;
+  --text-heading: #8f8d84;
+  --link: #1a1916;
+  --link-underline: #b0aea6;
+  --link-hover: #000000;
+  --border: #e0dfd8;
+  --pfp-bg: #e0dfd8;
+  --pfp-text: #8f8d84;
+  --toggle-bg: transparent;
+  --toggle-color: #8f8d84;
+  --toggle-hover: #1a1916;
+  --footer-text: #8f8d84;
+  --hint-bg: #eceae3;
+  --hint-text: #8f8d84;
+  --hint-border: #d6d4cc;
+  --skip-bg: #e0dfd8;
+  --skip-text: #1a1916;
+  --code-bg: #e8e6df;
+}
+
+/* =========================================================
+   RESET & BASE
+   ========================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background var(--transition), color var(--transition);
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--s-20) var(--page-pad) 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================================
+   SCROLL-EDGE FADES
+   ========================================================= */
+html::before,
+html::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 32px;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+html::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--bg), transparent);
+}
+
+html::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--bg), transparent);
+}
+
+html.fade-top::before { opacity: 1; }
+html.fade-bottom::after { opacity: 1; }
+
+/* =========================================================
+   PAGE-ENTER ANIMATION
+   ========================================================= */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Stagger delay utilities */
+.animate-in {
+  animation: fadeUp 0.6s var(--ease-out) both;
+}
+
+/* =========================================================
+   SKIP LINK
+   ========================================================= */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--page-pad);
+  background: var(--skip-bg);
+  color: var(--skip-text);
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  z-index: 1000;
+  transition: top 0.15s;
+}
+
+.skip-link:focus {
+  top: 12px;
+  outline: none;
+}
+
+/* =========================================================
+   HEADER (index page only)
+   ========================================================= */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  animation: fadeUp 0.5s var(--ease-out) both;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pfp {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--pfp-bg);
+  color: var(--pfp-text);
+  font-family: 'Geist Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  user-select: none;
+  transition: background var(--transition), color var(--transition);
+}
+
+.header-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+/* =========================================================
+   THEME TOGGLE (shared)
+   ========================================================= */
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--toggle-color);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color var(--transition);
+  line-height: 1;
+}
+
+.theme-toggle:hover {
+  color: var(--toggle-hover);
+}
+
+.theme-toggle:focus-visible {
+  outline: 1px solid var(--text-muted);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .icon-sun { display: none; }
+[data-theme="dark"] .icon-moon { display: block; }
+[data-theme="light"] .icon-moon { display: none; }
+[data-theme="light"] .icon-sun { display: block; }
+
+/* =========================================================
+   INDEX PAGE — Sections
+   ========================================================= */
+.section {
+  padding: var(--s-12) 0;
+  border-bottom: 1px solid var(--border);
+  transition: border-color var(--transition);
+}
+
+/* Staggered entrance for each section */
+.section:nth-child(1) { animation: fadeUp 0.55s var(--ease-out) 0.05s both; }
+.section:nth-child(2) { animation: fadeUp 0.55s var(--ease-out) 0.12s both; }
+.section:nth-child(3) { animation: fadeUp 0.55s var(--ease-out) 0.19s both; }
+.section:nth-child(4) { animation: fadeUp 0.55s var(--ease-out) 0.26s both; }
+
+.section:last-of-type {
+  border-bottom: none;
+}
+
+.section:focus {
+  outline: none;
+}
+
+.section.keyboard-focused {
+  outline: 1px solid var(--text-muted);
+  outline-offset: 8px;
+  border-radius: 2px;
+}
+
+/* Intro */
+.intro-text {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: var(--s-5);
+}
+
+.intro-sub {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+/* =========================================================
+   INDEX — Three-column grid
+   ========================================================= */
+.grid-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0 var(--s-8);
+  align-items: start;
+}
+
+.col-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-heading);
+  letter-spacing: 0;
+  margin-bottom: var(--s-5);
+  text-transform: none;
+  transition: color var(--transition);
+}
+
+.item-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.item-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: var(--link-underline);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  display: inline;
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+
+.item-title:hover,
+.item-title:focus-visible {
+  color: var(--link-hover);
+  text-decoration-color: var(--link-hover);
+  outline: none;
+}
+
+.item-title:focus-visible {
+  outline: 1px solid var(--text-muted);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+.arrow {
+  font-style: normal;
+  font-size: 13px;
+  color: var(--text-muted);
+  transition: color 0.15s;
+}
+
+.item-title:hover .arrow {
+  color: var(--link-hover);
+}
+
+.item-desc {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-top: var(--s-1);
+  transition: color var(--transition);
+}
+
+/* =========================================================
+   INDEX — Now / Connect sections
+   ========================================================= */
+.section-heading {
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-heading);
+  margin-bottom: var(--s-5);
+  text-transform: none;
+  transition: color var(--transition);
+}
+
+.now-section p,
+.connect-section p {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: var(--s-4);
+}
+
+.now-section p:last-child,
+.connect-section p:last-child {
+  margin-bottom: 0;
+}
+
+/* Inline links */
+.underline-link {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: var(--link-underline);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+
+.underline-link:hover,
+.underline-link:focus-visible {
+  color: var(--link-hover);
+  text-decoration-color: var(--link-hover);
+  outline: none;
+}
+
+.underline-link:focus-visible {
+  outline: 1px solid var(--text-muted);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+/* =========================================================
+   FOOTER (shared)
+   ========================================================= */
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding: var(--s-12) 0 var(--s-8);
+  animation: fadeIn 0.5s var(--ease-out) 0.35s both;
+}
+
+/* Inner page footer separator */
+.page-footer {
+  border-top: 1px solid var(--border);
+  transition: border-color var(--transition);
+}
+
+.footer-quote {
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  color: var(--footer-text);
+  transition: color var(--transition);
+}
+
+.footer-year {
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  color: var(--footer-text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color var(--transition);
+}
+
+.footer-dot {
+  font-size: 14px;
+}
+
+/* =========================================================
+   KEYBOARD HINT TOAST (shared)
+   ========================================================= */
+.kbd-hint {
+  position: fixed;
+  bottom: var(--s-6);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: var(--hint-bg);
+  color: var(--hint-text);
+  border: 1px solid var(--hint-border);
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  padding: 7px 14px;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s,
+    background var(--transition), color var(--transition), border-color var(--transition);
+  white-space: nowrap;
+  z-index: 100;
+}
+
+.kbd-hint.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* =========================================================
+   BACK LINK (shared: writing + craft + blog pages)
+   ========================================================= */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+  line-height: 1;
+}
+
+.back-link svg {
+  flex-shrink: 0;
+  transition: transform 0.2s var(--ease-spring), color 0.15s;
+}
+
+.back-link:hover,
+.back-link:focus-visible {
+  color: var(--text);
+  outline: none;
+}
+
+.back-link:hover svg {
+  transform: translateX(-2px);
+}
+
+.back-link:focus-visible {
+  outline: 1px solid var(--text-muted);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* =========================================================
+   PAGE HEADER (inner pages: writing, craft, blog)
+   ========================================================= */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  margin-bottom: var(--s-10);
+  animation: fadeUp 0.5s var(--ease-out) both;
+}
+
+/* =========================================================
+   WRITING PAGE
+   ========================================================= */
+
+/* Writing heading */
+.writing-heading {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: var(--s-9);
+  transition: color var(--transition);
+  animation: fadeUp 0.5s var(--ease-out) 0.15s both;
+}
+
+/* Writing list */
+.writing-list {
+  list-style: none;
+  width: 100%;
+  animation: fadeUp 0.5s var(--ease-out) 0.22s both;
+}
+
+.writing-row {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  align-items: stretch;
+}
+
+/*
+  Borders on .writing-title and .writing-date — NOT the row —
+  so the year gutter column stays visually "open".
+*/
+.writing-title,
+.writing-date {
+  border-bottom: 1px solid var(--border);
+  transition: border-color var(--transition), color 0.15s;
+  display: flex;
+  align-items: center;
+  padding: 14px 0;
+}
+
+.writing-row:first-child .writing-title,
+.writing-row:first-child .writing-date {
+  border-top: 1px solid var(--border);
+}
+
+.writing-year {
+  font-family: 'Geist Mono', monospace;
+  font-size: 13px;
+  color: var(--text-muted);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  padding: 14px 0;
+  transition: color var(--transition);
+}
+
+.writing-title {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text);
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.writing-title:hover,
+.writing-title:focus-visible {
+  color: var(--link-hover);
+  outline: none;
+}
+
+.writing-title:focus-visible {
+  outline: 1px solid var(--text-muted);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+.writing-date {
+  font-family: 'Geist Mono', monospace;
+  font-size: 13px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  padding-left: var(--s-5);
+  justify-content: flex-end;
+}
+
+.writing-row:hover .writing-title {
+  color: var(--link-hover);
+}
+
+.writing-row:hover .writing-date {
+  color: var(--text);
+}
+
+.writing-row.row-focused .writing-title {
+  color: var(--link-hover);
+  text-decoration: underline;
+  text-decoration-color: var(--link-underline);
+  text-underline-offset: 3px;
+}
+
+.writing-row.row-focused .writing-date {
+  color: var(--text);
+}
+
+/* =========================================================
+   BLOG POST PAGE
+   ========================================================= */
+.blog-content {
+  padding: 0 0 var(--s-20);
+}
+
+.blog-post {
+  max-width: 100%;
+}
+
+/* Title */
+.blog-title {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.35;
+  margin-bottom: 6px;
+  transition: color var(--transition);
+  animation: fadeUp 0.5s var(--ease-out) 0.1s both;
+}
+
+/* Date */
+.blog-date {
+  display: block;
+  font-family: 'Geist Mono', monospace;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: var(--s-10);
+  transition: color var(--transition);
+  animation: fadeUp 0.5s var(--ease-out) 0.15s both;
+}
+
+/* Blog body — prose */
+.blog-body {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text);
+  animation: fadeUp 0.5s var(--ease-out) 0.22s both;
+}
+
+.blog-body p {
+  margin-bottom: var(--s-5);
+  transition: color var(--transition);
+}
+
+.blog-body p:last-child {
+  margin-bottom: 0;
+}
+
+.blog-body em {
+  font-style: italic;
+}
+
+/* Section headings */
+.blog-heading {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: var(--s-9);
+  margin-bottom: var(--s-4);
+  line-height: 1.35;
+  transition: color var(--transition);
+}
+
+/* Lists */
+.blog-body ul {
+  list-style: disc;
+  padding-left: var(--s-5);
+  margin-bottom: var(--s-5);
+}
+
+.blog-body ul li {
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--text);
+  margin-bottom: 6px;
+  padding-left: var(--s-1);
+  transition: color var(--transition);
+}
+
+.blog-body ul li:last-child {
+  margin-bottom: 0;
+}
+
+/* Nested lists */
+.blog-body ul ul {
+  list-style: circle;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+/* Inline code */
+.blog-body code {
+  font-family: 'Geist Mono', monospace;
+  font-size: 14px;
+  background: var(--code-bg);
+  color: var(--text);
+  padding: 2px 7px;
+  border-radius: 4px;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* Blog images */
+.blog-image-wrap {
+  margin: var(--s-8) 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--pfp-bg);
+  transition: background var(--transition);
+}
+
+.blog-image-wrap img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.blog-image-caption {
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 10px var(--s-4);
+  text-align: center;
+  transition: color var(--transition);
+}
+
+/* Links inside blog body */
+.blog-body .underline-link {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: var(--link-underline);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+
+.blog-body .underline-link:hover,
+.blog-body .underline-link:focus-visible {
+  color: var(--link-hover);
+  text-decoration-color: var(--link-hover);
+}
+
+/* =========================================================
+   CRAFT PAGE
+   ========================================================= */
+
+
+/* Intro */
+.craft-intro {
+  margin-bottom: var(--s-12);
+  animation: fadeUp 0.5s var(--ease-out) 0.15s both;
+}
+
+.craft-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 8px;
+  transition: color var(--transition);
+}
+
+.craft-subtitle {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-muted);
+  line-height: 1.6;
+  transition: color var(--transition);
+}
+
+/* 3-column grid */
+.craft-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0 var(--s-8);
+  align-items: start;
+  animation: fadeUp 0.55s var(--ease-out) 0.22s both;
+}
+
+.craft-col-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 0;
+  margin-bottom: var(--s-6);
+  transition: color var(--transition);
+}
+
+.craft-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-8);
+}
+
+.craft-item-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--link-underline);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  display: inline;
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+
+.craft-item-title:hover,
+.craft-item-title:focus-visible {
+  color: var(--link-hover);
+  text-decoration-color: var(--link-hover);
+  outline: none;
+}
+
+.craft-item-title:focus-visible {
+  outline: 1px solid var(--text-muted);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+.craft-item-desc {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-top: var(--s-1);
+  transition: color var(--transition);
+}
+
+.craft-focused {
+  color: var(--link-hover) !important;
+  text-decoration-color: var(--link-hover) !important;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+/* Index page */
+@media (max-width: 600px) {
+  body {
+    padding: var(--s-14) var(--s-5) 0;
+  }
+
+  .site-header,
+  .page-header {
+    padding: 0;
+  }
+
+  .section {
+    padding: var(--s-9) 0;
+  }
+
+  .grid-section {
+    grid-template-columns: 1fr;
+    gap: var(--s-9) 0;
+  }
+
+  .grid-section .grid-col:not(:last-child) {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: var(--s-9);
+  }
+
+  .item-title {
+    font-size: 16px;
+  }
+
+  .item-desc {
+    font-size: 14px;
+  }
+}
+
+/* Writing, Blog & Craft pages */
+@media (max-width: 700px) {
+  .writing-row {
+    grid-template-columns: 52px 1fr auto;
+  }
+
+  .blog-title {
+    font-size: 20px;
+  }
+
+  .blog-heading {
+    font-size: 17px;
+    margin-top: var(--s-7);
+    margin-bottom: var(--s-3);
+  }
+
+  .blog-body {
+    font-size: 15px;
+  }
+
+  .blog-body code {
+    font-size: 13px;
+  }
+
+  .craft-grid {
+    grid-template-columns: 1fr;
+    gap: var(--s-10) 0;
+  }
+}
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+::selection {
+  background: var(--text-muted);
+  color: var(--bg);
+}
+
+/* =========================================================
+   SMOOTH TRANSITIONS ON THEME CHANGE
+   ========================================================= */
+html[data-theme] * {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+/* Exclude animations from theme transitions */
+html[data-theme] .section,
+html[data-theme] .site-header,
+html[data-theme] .site-footer,
+html[data-theme] .writing-heading,
+html[data-theme] .writing-list,
+html[data-theme] .blog-title,
+html[data-theme] .blog-date,
+html[data-theme] .blog-body,
+html[data-theme] .craft-intro,
+html[data-theme] .craft-grid {
+  transition-property: color, background-color, border-color;
+}
